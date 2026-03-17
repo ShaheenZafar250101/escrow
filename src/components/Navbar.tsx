@@ -89,7 +89,7 @@ const Navbar: React.FC<NavbarProps> = ({ isLoggedIn, onLogin, onLogout, userName
   ];
 
   return (
-    <nav className="bg-[#003b5c] text-white relative z-50">
+    <nav className="bg-[#003b5c] text-white sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center space-x-8">
           {/* Logo */}
