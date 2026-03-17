@@ -1,0 +1,5 @@
+{
+  "name": "Escrow Clone",
+  "description": "A duplication of Escrow.com login and transactions pages with interactive menus.",
+  "requestFramePermissions": []
+}
