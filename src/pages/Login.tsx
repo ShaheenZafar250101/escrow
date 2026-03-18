@@ -22,10 +22,10 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   return (
     <main className="min-h-[calc(100vh-64px)] bg-[#f8f9fa] flex flex-col">
       <div className="flex-grow flex items-center justify-center p-4">
-        <div className="w-full max-w-[1120px]">
+        <div className="w-full max-w-[776px]">
           <div className="bg-white rounded shadow-[0_2px_10px_rgba(0,0,0,0.05)] overflow-hidden">
-            <form onSubmit={handleLogin} className="py-20 px-[147px]">
-              <h2 className="text-2xl font-bold text-[#333] mb-8 text-center">Login to Escrow.com</h2>
+            <form onSubmit={handleLogin} className="px-[147px]">
+              <h2 className="text-2xl font-bold text-[#333] mb-8 text-center pt-20">Login to Escrow.com</h2>
               
               {error && (
                 <div className="mb-6 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded flex items-center text-sm">
@@ -41,8 +41,8 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                   </label>
                   <div className="relative flex items-center">
                     <div className="absolute left-0 pl-4 flex items-center pointer-events-none">
-                      <Mail className="h-4 w-4 text-gray-400" />
-                      <div className="h-5 w-[1px] bg-gray-200 ml-3"></div>
+                      <Mail className="h-4 w-4 text-gray-600" />
+                      <div className="h-5 w-[1px] bg-gray-500 ml-3"></div>
                     </div>
                     <input 
                       name="username" 
@@ -50,7 +50,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="block w-full pl-14 pr-4 py-3 border border-gray-300 rounded focus:ring-[#3bb75e] focus:border-[#3bb75e] text-gray-900 text-sm transition-all"
+                      className="block w-full pl-14 pr-4 py-3 border border-gray-500 rounded focus:ring-[#3bb75e] focus:border-[#3bb75e] text-gray-900 text-sm transition-all"
                     />
                   </div>
                 </div>
@@ -61,8 +61,8 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                   </label>
                   <div className="relative flex items-center">
                     <div className="absolute left-0 pl-4 flex items-center pointer-events-none">
-                      <Lock className="h-4 w-4 text-gray-400" />
-                      <div className="h-5 w-[1px] bg-gray-200 ml-3"></div>
+                      <Lock className="h-4 w-4 text-gray-600" />
+                      <div className="h-5 w-[1px] bg-gray-500 ml-3"></div>
                     </div>
                     <input 
                       name="password" 
@@ -70,17 +70,11 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                       type="password" 
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="block w-full pl-14 pr-4 py-3 border border-gray-300 rounded focus:ring-[#3bb75e] focus:border-[#3bb75e] text-gray-900 text-sm transition-all"
+                      className="block w-full pl-14 pr-4 py-3 border border-gray-500 rounded focus:ring-[#3bb75e] focus:border-[#3bb75e] text-gray-900 text-sm transition-all"
                     />
                   </div>
                 </div>
               </fieldset>
-
-              <div className="mt-6 mb-6 flex justify-center">
-                <div className="w-full max-w-[300px] h-[65px] bg-[#f9f9f9] border border-gray-200 rounded flex items-center justify-center text-[10px] text-gray-400 font-medium">
-                  Cloudflare Turnstile Verification Placeholder
-                </div>
-              </div>
 
               <div className="mt-8 space-y-4">
                 <button 
@@ -100,7 +94,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full border-t border-gray-100"></div>
                 </div>
-                <span className="relative px-4 bg-white text-[10px] text-gray-400 font-bold uppercase tracking-widest">- OR -</span>
+                <span className="relative px-4 bg-white text-[14px] text-black-400 font-medium uppercase tracking-widest">- OR -</span>
               </div>
 
               <button className="w-full border-2 border-[#3bb75e] text-[#3bb75e] hover:bg-[#3bb75e]/5 py-3 rounded font-bold transition-colors text-sm uppercase tracking-wider">
