@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, Lock, AlertCircle } from 'lucide-react';
+import { motion } from 'motion/react';
 
 interface LoginProps {
   onLogin: () => void;
@@ -9,14 +10,21 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const [email, setEmail] = useState('nomanmurtaza95@gmail.com');
   const [password, setPassword] = useState('Admin@1234');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (email === 'nomanmurtaza95@gmail.com' && password === 'Admin@1234') {
-      onLogin();
-    } else {
-      setError('Invalid email or password. Please try again.');
-    }
+    setIsLoading(true);
+    setError('');
+
+    setTimeout(() => {
+      if (email === 'nomanmurtaza95@gmail.com' && password === 'Admin@1234') {
+        onLogin();
+      } else {
+        setError('Invalid email or password. Please try again.');
+        setIsLoading(false);
+      }
+    }, 2000);
   };
 
   return (
@@ -36,7 +44,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
               <fieldset className="space-y-6">
                 <div className="space-y-2">
-                  <label htmlFor="username" className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider">
+                  <label htmlFor="username" className="block text-[11px] font-normal text-[#2b3333] uppercase tracking-wider">
                     Please enter your email address<span className="text-red-500">*</span>
                   </label>
                   <div className="relative flex items-center">
@@ -56,7 +64,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="password" className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider">
+                  <label htmlFor="password" className="block text-[11px] font-normal text-[#2b3333] uppercase tracking-wider">
                     Please enter your password<span className="text-red-500">*</span>
                   </label>
                   <div className="relative flex items-center">
@@ -79,9 +87,36 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
               <div className="mt-8 space-y-4">
                 <button 
                   type="submit"
-                  className="w-full bg-[#3bb75e] hover:bg-[#34a354] text-white py-3 rounded font-bold transition-colors text-sm uppercase tracking-wider shadow-sm"
+                  disabled={isLoading}
+                  className={`w-full py-3 rounded font-bold transition-all text-sm uppercase tracking-wider shadow-sm border-2 flex items-center justify-center min-h-[48px]
+                    ${isLoading 
+                      ? 'bg-[#3bb75e] border-[#3bb75e] cursor-not-allowed' 
+                      : 'bg-[#3bb75e] border-transparent text-white hover:bg-white hover:text-[#42c31d] hover:border-[#42c31d]'
+                    }`}
                 >
-                  Secure Login
+                  {isLoading ? (
+                    <div className="flex space-x-2">
+                      {[0, 1, 2].map((i) => (
+                        <motion.div
+                          key={i}
+                          animate={{
+                            y: [0, -6, 0],
+                            opacity: [0.4, 1, 0.4],
+                            scale: [1, 1.2, 1]
+                          }}
+                          transition={{
+                            duration: 0.8,
+                            repeat: Infinity,
+                            delay: i * 0.15,
+                            ease: "easeInOut"
+                          }}
+                          className="w-2 h-2 bg-[#3bb75e] rounded-full"
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    "Secure Login"
+                  )}
                 </button>
                 <div className="text-center">
                   <a href="#" className="text-sm text-[#007bff] hover:underline transition-all">Recover your password</a>
@@ -107,9 +142,11 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
       <footer className="py-8 bg-white border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <nav className="flex justify-center space-x-6 mb-4">
+          <nav className="flex justify-center items-center space-x-4 mb-4">
             <a href="#" className="text-[11px] font-bold text-gray-500 uppercase tracking-widest hover:text-[#3bb75e] transition-colors">Privacy Policy</a>
+            <div className="w-[1px] h-3 bg-gray-500"></div>
             <a href="#" className="text-[11px] font-bold text-gray-500 uppercase tracking-widest hover:text-[#3bb75e] transition-colors">Licenses and Complaints</a>
+            <div className="w-[1px] h-3 bg-gray-500"></div>
             <a href="#" className="text-[11px] font-bold text-gray-500 uppercase tracking-widest hover:text-[#3bb75e] transition-colors">Legal</a>
           </nav>
           <p className="text-[11px] text-gray-400">Copyright © 1999-2026 Escrow.com, Inc. All rights reserved</p>
