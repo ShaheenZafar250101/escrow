@@ -180,7 +180,7 @@ const Navbar: React.FC<NavbarProps> = ({ isLoggedIn, onLogin, onLogout, userName
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className="absolute right-[10px] top-[calc(100%-10px)] w-[304px] bg-white rounded-[4px] shadow-[0_0_1px_0_rgba(0,0,0,0.1),0_2px_4px_0_rgba(0,0,0,0.07)] overflow-hidden z-[60] text-black leading-[1.4]"
+                      className="absolute right-0 top-[calc(100%+12px)] w-[304px] bg-white rounded-[4px] shadow-[0_0_1px_0_rgba(0,0,0,0.1),0_2px_4px_0_rgba(0,0,0,0.07)] overflow-hidden z-[60] text-black leading-[1.4]"
                     >
                       <div className="flex items-center p-[1.8rem_1.8rem_1.9rem]">
                         <div className="flex-shrink-0 mr-[1.6rem]">
