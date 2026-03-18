@@ -91,7 +91,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                   className={`w-full py-3 rounded font-bold transition-all text-sm uppercase tracking-wider shadow-sm border-2 flex items-center justify-center min-h-[48px]
                     ${isLoading 
                       ? 'bg-[#3bb75e] border-[#3bb75e] cursor-not-allowed' 
-                      : 'bg-[#3bb75e] border-transparent text-white hover:bg-white hover:text-[#42c31d] hover:border-[#42c31d]'
+                      : 'bg-[#3bb75e] border-[#3bb75e] text-white hover:border-[#42c31d] hover:bg-[#42c31d] hover:text-[#ffffff]'
                     }`}
                 >
                   {isLoading ? (
@@ -110,7 +110,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                             delay: i * 0.15,
                             ease: "easeInOut"
                           }}
-                          className="w-2 h-2 bg-[#3bb75e] rounded-full"
+                          className="w-2 h-2 bg-white rounded-full"
                         />
                       ))}
                     </div>
