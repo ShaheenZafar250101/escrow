@@ -246,7 +246,8 @@ const Transactions: React.FC = () => {
   return (
     <div className="!bg-[#f5f7f9]">
       <div className="max-w-7xl mx-auto px-4 pt-12 pb-6">
-        <h1 className="text-4xl font-medium text-[#02416a] mb-10">My Transactions</h1>
+        <h1 className="text-4xl font-medium text-[#02416a] mb-4">My Transactions</h1>
+        <div className="border-b border-gray-200 mb-10"></div>
         
         {/* Tabs */}
         <div className="flex border-b border-gray-200 mb-10">

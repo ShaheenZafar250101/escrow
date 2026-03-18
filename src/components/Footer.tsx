@@ -1,5 +1,5 @@
 import React from 'react';
-import { Globe, Phone } from 'lucide-react';
+import { ChevronDown, Phone } from 'lucide-react';
 import Logo from './Logo';
 
 const Footer: React.FC = () => {
@@ -39,20 +39,23 @@ const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-12 mb-16">
           <div className="md:col-span-1">
-            <h3 className="text-[10px] font-bold tracking-widest mb-6 opacity-80">LANGUAGE</h3>
+            <h3 className="text-[10px] font-bold tracking-widest mb-2 opacity-80">LANGUAGE</h3>
+            <div className="border-b border-white/20 mb-6 text-gray-500"></div>
             <div className="relative inline-block w-full">
-              <button className="w-full bg-white/5 border border-white/20 rounded px-4 py-2 flex items-center justify-between text-sm">
+              <button className="w-full bg-transparent border border-white rounded px-3 py-1.5 flex items-center justify-between text-sm">
                 <div className="flex items-center">
-                  <span className="mr-2">🇬🇧</span> English
+                  <img src="https://flagcdn.com/w40/gb.png" alt="GB Flag" className="mr-2 w-5 h-auto" referrerPolicy="no-referrer" /> 
+                  <span className="font-medium">English</span>
                 </div>
-                <Globe className="w-4 h-4 opacity-60" />
+                <ChevronDown className="w-3 h-3 opacity-80 ml-2" />
               </button>
             </div>
           </div>
 
           {sections.map((section, idx) => (
             <div key={idx}>
-              <h3 className="text-[10px] font-bold tracking-widest mb-6 opacity-80 uppercase">{section.title}</h3>
+              <h3 className="text-[10px] font-bold tracking-widest mb-2 opacity-80 uppercase">{section.title}</h3>
+              <div className="border-b border-white/20 mb-6 text-gray-500"></div>
               <ul className="space-y-3">
                 {section.links.map((link, lIdx) => (
                   <li key={lIdx}>
