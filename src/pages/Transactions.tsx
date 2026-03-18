@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Search, Filter, ChevronDown, Copy, Info, HelpCircle, ArrowLeft, Clock, FileText, ExternalLink } from 'lucide-react';
 
 interface Transaction {
@@ -23,15 +24,8 @@ interface Transaction {
 
 const TransactionDetail: React.FC<{ transaction: Transaction; onBack: () => void }> = ({ transaction, onBack }) => {
   return (
-    <div className="min-h-screen bg-[#f8f9fa] pb-20">
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <button 
-          onClick={onBack}
-          className="flex items-center text-[#007bff] hover:underline mb-6 font-medium"
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" /> Back to Transactions
-        </button>
-
+    <div className="bg-[#f8f9fa]">
+      <div className="max-w-7xl mx-auto px-4 pt-8 pb-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
@@ -65,7 +59,16 @@ const TransactionDetail: React.FC<{ transaction: Transaction; onBack: () => void
               </div>
               
               <p className="text-sm text-gray-600 leading-relaxed mb-6">
-                <span className="font-medium text-gray-800">{transaction.buyer}</span> is buying a <span className="font-medium text-gray-800">domain name</span> from <span className="font-medium text-gray-800">{transaction.seller}</span>. 
+                <span className="font-medium text-gray-800">{transaction.buyer}</span> is buying a <span className="font-medium text-gray-800">domain name</span> from <span className="font-medium text-gray-800">
+                  {transaction.seller?.includes('(') ? (
+                    <>
+                      {transaction.seller.split('(')[0]}
+                      <span className="text-[#2f80ed]">({transaction.seller.split('(')[1]}</span>
+                    </>
+                  ) : (
+                    transaction.seller
+                  )}
+                </span>. 
                 The <span className="font-medium text-gray-800">inspection period</span> for this transaction is <span className="font-medium text-gray-800">{transaction.inspectionPeriod}</span>.
               </p>
 
@@ -76,13 +79,26 @@ const TransactionDetail: React.FC<{ transaction: Transaction; onBack: () => void
                 </span>
               </div>
 
-              <div className="border border-blue-100 bg-blue-50/30 rounded-lg p-6">
-                <h4 className="font-medium text-[#225cab] mb-2">
-                  {transaction.status === 'Cancelled' ? 'This transaction has been cancelled.' : 'This transaction has been completed.'}
-                </h4>
-                <p className="text-sm text-gray-500">
-                  {transaction.status === 'Cancelled' ? 'No action is required from you for now.' : 'Funds have been disbursed to the seller.'}
-                </p>
+              <div className="border border-blue-100 bg-blue-50/30 rounded-lg p-8 relative overflow-hidden">
+                <div className="relative z-10">
+                  <h4 className="text-xl font-medium text-[#225cab] mb-2">
+                    {transaction.status === 'Cancelled' ? 'This transaction has been cancelled.' : 'This transaction has been completed.'}
+                  </h4>
+                  <p className="text-sm text-gray-500">
+                    {transaction.status === 'Cancelled' ? 'No action is required from you for now.' : 'Funds have been disbursed to the seller.'}
+                  </p>
+                </div>
+                
+                {/* Shield Watermark */}
+                <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 opacity-[0.05] pointer-events-none select-none">
+                  <svg width="240" height="240" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M100 20C100 20 160 40 160 100C160 160 100 180 100 180C100 180 40 160 40 100C40 40 100 20 100 20Z" stroke="#225cab" strokeWidth="12"/>
+                    <rect x="110" y="65" width="60" height="15" fill="#225cab" />
+                    <rect x="110" y="92.5" width="60" height="15" fill="#225cab" />
+                    <rect x="110" y="120" width="60" height="15" fill="#225cab" />
+                    <path d="M110 80C90 80 80 90 80 100C80 110 90 120 110 120" stroke="#3bb75e" strokeWidth="12" strokeLinecap="round" />
+                  </svg>
+                </div>
               </div>
             </div>
 
@@ -138,9 +154,8 @@ const TransactionDetail: React.FC<{ transaction: Transaction; onBack: () => void
               </div>
               <div className="space-y-6">
                 {transaction.history?.map((event, idx) => (
-                  <div key={idx} className="relative pl-6 border-l-2 border-gray-100 pb-2 last:pb-0">
-                    <div className="absolute -left-[9px] top-0 w-4 h-4 bg-white border-2 border-blue-500 rounded-full"></div>
-                    <div className="text-[11px] font-medium text-gray-400 uppercase tracking-wider">{event.date}</div>
+                  <div key={idx} className="relative border-l-2 border-gray-100 pb-2 last:pb-0">
+                    <div className="text-[11px] font-bold text-black-400 uppercase tracking-wider">{event.date}</div>
                     <div className="text-sm text-gray-700 mt-1">{event.action}</div>
                   </div>
                 ))}
@@ -166,13 +181,15 @@ const Transactions: React.FC = () => {
   const [activeTab, setActiveTab] = useState('All');
   const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
   const tabs = ['All', 'Action Required', 'Open', 'Closed'];
+  const navigate = useNavigate();
+  const { transactionId } = useParams();
 
   const allTransactions: Transaction[] = [
     {
-      id: '13114573',
-      title: 'royalstaruae.com',
+      id: '10142567',
+      title: 'Royal Star',
       subtitle: 'Domain',
-      created: 'Mar 16, 2026',
+      created: 'Jan 22, 2026',
       amount: '$1,100.00',
       currency: 'USD',
       role: 'Buyer',
@@ -185,13 +202,34 @@ const Transactions: React.FC = () => {
       subtotal: '$1,100.00',
       total: '$1,100.00',
       history: [
-        { date: 'Jun 22, 2026, 8:45 PM GMT+5', action: 'Requested by seller' },
-        { date: 'Jun 22, 2026, 8:15 PM GMT+5', action: 'Both parties have accepted the offer, awaiting buyer payment.' },
-        { date: 'Jun 22, 2026, 6:30 PM GMT+5', action: 'Buyer has agreed to the terms of this transaction.' },
-        { date: 'Jun 22, 2026, 5:49 PM GMT+5', action: 'Seller initiates the transaction' }
+        { date: 'Jan 22, 2026, 8:45 PM GMT+5', action: 'Requested by seller' },
+        { date: 'Jan 22, 2026, 8:15 PM GMT+5', action: 'Both parties have accepted the offer, awaiting buyer payment.' },
+        { date: 'Jan 22, 2026, 6:30 PM GMT+5', action: 'Buyer has agreed to the terms of this transaction.' },
+        { date: 'Jan 22, 2026, 5:49 PM GMT+5', action: 'Seller initiates the transaction' }
       ]
     }
   ];
+
+  useEffect(() => {
+    if (transactionId) {
+      const transaction = allTransactions.find(t => t.id === transactionId);
+      if (transaction) {
+        setSelectedTransaction(transaction);
+      } else {
+        setSelectedTransaction(null);
+      }
+    } else {
+      setSelectedTransaction(null);
+    }
+  }, [transactionId]);
+
+  const handleTransactionClick = (transaction: Transaction) => {
+    window.open(`/transaction/${transaction.id}`, '_blank');
+  };
+
+  const handleBack = () => {
+    navigate('/');
+  };
 
   const filteredTransactions = allTransactions.filter(t => {
     if (activeTab === 'All') return true;
@@ -202,12 +240,12 @@ const Transactions: React.FC = () => {
   });
 
   if (selectedTransaction) {
-    return <TransactionDetail transaction={selectedTransaction} onBack={() => setSelectedTransaction(null)} />;
+    return <TransactionDetail transaction={selectedTransaction} onBack={handleBack} />;
   }
   
   return (
-    <div className="min-h-screen bg-white pb-20">
-      <div className="max-w-7xl mx-auto px-4 py-12">
+    <div className="bg-white">
+      <div className="max-w-7xl mx-auto px-4 pt-12 pb-6">
         <h1 className="text-4xl font-medium text-[#225cab] mb-10">My Transactions</h1>
         
         {/* Tabs */}
@@ -228,21 +266,23 @@ const Transactions: React.FC = () => {
 
         {/* Filter Bar */}
         <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6 mb-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="relative w-full md:w-[400px]">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Search className="h-4 w-4 text-gray-400" />
+          <div className="flex items-center gap-4 w-full md:w-auto">
+            <div className="relative w-full md:w-[400px]">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Search className="h-4 w-4 text-gray-400" />
+              </div>
+              <input 
+                type="text" 
+                placeholder="Search transaction"
+                className="block w-full pl-10 pr-3 py-2 bg-gray-50 border border-gray-200 rounded focus:ring-[#3bb75e] focus:border-[#3bb75e] text-sm"
+              />
             </div>
-            <input 
-              type="text" 
-              placeholder="Search transaction"
-              className="block w-full pl-10 pr-3 py-2 bg-gray-50 border border-gray-200 rounded focus:ring-[#3bb75e] focus:border-[#3bb75e] text-sm"
-            />
+            <button className="flex items-center px-4 py-2 border border-gray-200 rounded text-sm font-medium hover:bg-gray-50 whitespace-nowrap">
+              <Filter className="w-4 h-4 mr-2" /> Filter
+            </button>
           </div>
           
           <div className="flex items-center space-x-4 w-full md:w-auto">
-            <button className="flex items-center px-4 py-2 border border-gray-300 rounded text-sm font-medium hover:bg-gray-50">
-              <Filter className="w-4 h-4 mr-2" /> Filter
-            </button>
             <span className="text-sm text-gray-500">You are viewing <span className="font-medium text-gray-800">{filteredTransactions.length}</span> transaction{filteredTransactions.length !== 1 ? 's' : ''}</span>
           </div>
         </div>
@@ -313,7 +353,7 @@ const Transactions: React.FC = () => {
                 filteredTransactions.map((transaction) => (
                   <tr 
                     key={transaction.id} 
-                    onClick={() => setSelectedTransaction(transaction)}
+                    onClick={() => handleTransactionClick(transaction)}
                     className="hover:bg-gray-50 transition-colors group cursor-pointer"
                   >
                     <td className="px-6 py-8 text-sm font-medium text-gray-800">
