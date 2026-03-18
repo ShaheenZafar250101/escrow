@@ -43,14 +43,18 @@ function AppContent() {
         <Routes>
           <Route 
             path="/login" 
-            element={!isLoggedIn ? <Login onLogin={handleLogin} /> : <Navigate to="/" replace />} 
+            element={!isLoggedIn ? <Login onLogin={handleLogin} /> : <Navigate to="/transaction" replace />} 
           />
           <Route 
             path="/" 
+            element={<Navigate to="/login" replace />} 
+          />
+          <Route 
+            path="/transaction" 
             element={isLoggedIn ? <Transactions /> : <Navigate to="/login" state={{ from: location }} replace />} 
           />
           <Route 
-            path="/transaction/:transactionId" 
+            path="/transactions/:transactionId" 
             element={isLoggedIn ? <Transactions /> : <Navigate to="/login" state={{ from: location }} replace />} 
           />
           {/* Fallback to home */}

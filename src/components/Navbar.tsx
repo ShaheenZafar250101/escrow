@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Search, ChevronDown, User, LogOut, ExternalLink, Globe, Phone } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import Logo from './Logo';
 
@@ -16,6 +17,7 @@ const Navbar: React.FC<NavbarProps> = ({ isLoggedIn, onLogin, onLogout, userName
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isNavHovered, setIsNavHovered] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -105,7 +107,13 @@ const Navbar: React.FC<NavbarProps> = ({ isLoggedIn, onLogin, onLogout, userName
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center space-x-8">
           {/* Logo */}
-          <div className="flex items-center cursor-pointer" onClick={() => setActiveMenu(null)}>
+          <div 
+            className="flex items-center cursor-pointer" 
+            onClick={() => {
+              setActiveMenu(null);
+              navigate(isLoggedIn ? '/transaction' : '/login');
+            }}
+          >
             <Logo className="h-8 w-auto" isWhite={!isWhiteNav} />
           </div>
 
@@ -129,7 +137,12 @@ const Navbar: React.FC<NavbarProps> = ({ isLoggedIn, onLogin, onLogout, userName
 
           {isLoggedIn && (
             <div className="hidden md:flex items-center space-x-6">
-              <button className="text-sm font-medium border-b-2 border-[#3bb75e] py-5">My Transactions</button>
+              <button 
+                onClick={() => navigate('/transaction')}
+                className="text-sm font-medium border-b-2 border-[#3bb75e] py-5"
+              >
+                My Transactions
+              </button>
               <button className="text-sm font-medium hover:text-[#3bb75e] transition-colors py-5">My Integrations</button>
               <button className="text-sm font-medium hover:text-[#3bb75e] transition-colors py-5">Help</button>
               <button className="text-sm font-medium hover:text-[#3bb75e] transition-colors py-5">Contact Us</button>

@@ -224,11 +224,11 @@ const Transactions: React.FC = () => {
   }, [transactionId]);
 
   const handleTransactionClick = (transaction: Transaction) => {
-    window.open(`/transaction/${transaction.id}`, '_blank');
+    navigate(`/transactions/${transaction.id}`);
   };
 
   const handleBack = () => {
-    navigate('/');
+    navigate('/transaction');
   };
 
   const filteredTransactions = allTransactions.filter(t => {
