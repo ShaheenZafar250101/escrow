@@ -188,7 +188,7 @@ const Transactions: React.FC = () => {
     {
       id: '10142567',
       title: 'Royal Star',
-      subtitle: 'Domain',
+      subtitle: 'Domain Name',
       created: 'Jan 22, 2026',
       amount: '$1,100.00',
       currency: 'USD',
@@ -246,7 +246,7 @@ const Transactions: React.FC = () => {
   return (
     <div className="!bg-[#f5f7f9]">
       <div className="max-w-7xl mx-auto px-4 pt-12 pb-6">
-        <h1 className="text-4xl font-medium text-[#225cab] mb-10">My Transactions</h1>
+        <h1 className="text-4xl font-medium text-[#02416a] mb-10">My Transactions</h1>
         
         {/* Tabs */}
         <div className="flex border-b border-gray-200 mb-10">
@@ -357,7 +357,7 @@ const Transactions: React.FC = () => {
                     className="hover:bg-gray-50 transition-colors group cursor-pointer"
                   >
                     <td className="px-6 py-8 text-sm font-medium text-gray-800">
-                      <div className="flex items-center group/id">
+                      <div className="flex items-center group/id font-medium">
                         {transaction.id}
                         <a 
                           href={`https://www.escrow.com/transaction/${transaction.id}`}
@@ -375,12 +375,12 @@ const Transactions: React.FC = () => {
                       <div className="font-medium text-sm text-gray-800">{transaction.title}</div>
                       <div className="text-xs text-gray-500">{transaction.subtitle}</div>
                     </td>
-                    <td className="px-6 py-8 text-sm text-gray-800">{transaction.created}</td>
+                    <td className="font-medium px-6 py-8 text-sm text-gray-800">{transaction.created}</td>
                     <td className="px-6 py-8">
                       <div className="font-medium text-sm text-gray-800">{transaction.amount}</div>
                       <div className="text-[10px] text-gray-500 font-medium">{transaction.currency}</div>
                     </td>
-                    <td className="px-6 py-8 text-sm text-gray-800">{transaction.role}</td>
+                    <td className="font-medium px-6 py-8 text-sm text-gray-800">{transaction.role}</td>
                     <td className="px-6 py-8">
                       <span className="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 text-gray-600 text-xs font-medium whitespace-nowrap">
                         <div className={`w-2 h-2 rounded-full ${transaction.statusColor} mr-2`}></div>
