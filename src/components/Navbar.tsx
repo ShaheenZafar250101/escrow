@@ -180,32 +180,46 @@ const Navbar: React.FC<NavbarProps> = ({ isLoggedIn, onLogin, onLogout, userName
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className="absolute right-0 top-full mt-3 w-80 bg-white rounded shadow-[0_10px_40px_rgba(0,0,0,0.1)] text-gray-800 overflow-hidden z-[60]"
+                      className="absolute right-[10px] top-[calc(100%-10px)] w-[304px] bg-white rounded-[4px] shadow-[0_0_1px_0_rgba(0,0,0,0.1),0_2px_4px_0_rgba(0,0,0,0.07)] overflow-hidden z-[60] text-black leading-[1.4]"
                     >
-                      <div className="p-8 flex items-center space-x-5">
-                        <div className="w-20 h-20 min-w-[80px] flex-shrink-0 aspect-square bg-[#007bff] rounded-full flex items-center justify-center text-3xl font-bold text-white shadow-sm">
-                          {userName?.charAt(0) || 'A'}
+                      <div className="flex items-center p-[1.8rem_1.8rem_1.9rem]">
+                        <div className="flex-shrink-0 mr-[1.6rem]">
+                          <span className="inline-block rounded-full font-bold text-white w-[65px] h-[65px] text-[2.4rem] leading-[66px] bg-[#08f] shadow-[0_2px_4px_0_rgba(0,0,0,0.17)] text-center uppercase tracking-[-1px] align-middle">
+                            {userName?.charAt(0) || 'A'}
+                          </span>
                         </div>
-                        <div className="flex flex-col">
-                          <h3 className="text-[#333] text-xl font-medium leading-tight">{userName || 'Abida Shaheen'}</h3>
-                          <p className="text-sm text-gray-500 mt-1">{userEmail || 'ounzee.3@gmail.com'}</p>
+                        <div className="flex flex-col overflow-hidden">
+                          <span className="text-[14px] font-bold text-gray-900 truncate">{userName || 'Abida Shaheen'}</span>
+                          <span className="text-[12px] text-gray-500 truncate">{userEmail || 'ounzee.3@gmail.com'}</span>
                         </div>
                       </div>
-                      <div className="border-t border-gray-100">
-                        <button className="w-full text-left px-8 py-4 hover:bg-gray-50 flex items-center justify-between text-[#007bff] font-medium transition-colors">
-                          My Profile
-                          <ChevronDown className="-rotate-90 w-4 h-4 text-gray-400" />
-                        </button>
-                        <button 
-                          onClick={() => {
-                            onLogout();
-                            setIsProfileOpen(false);
-                          }}
-                          className="w-full text-left px-8 py-4 hover:bg-gray-50 text-[#007bff] font-medium border-t border-gray-100 transition-colors"
-                        >
-                          Sign Out
-                        </button>
-                      </div>
+                      <nav className="border-t border-gray-100">
+                        <ul className="m-0 p-0 list-none">
+                          <li className="border-b border-gray-100 last:border-0">
+                            <button 
+                              onClick={() => {
+                                navigate('/account-info');
+                                setIsProfileOpen(false);
+                              }}
+                              className="w-full text-left px-[1.8rem] py-4 hover:bg-gray-50 flex items-center justify-between text-[#007bff] font-medium transition-colors text-[14px]"
+                            >
+                              My Profile
+                              <ChevronDown className="-rotate-90 w-4 h-4 text-gray-400" />
+                            </button>
+                          </li>
+                          <li>
+                            <button 
+                              onClick={() => {
+                                onLogout();
+                                setIsProfileOpen(false);
+                              }}
+                              className="w-full text-left px-[1.8rem] py-4 hover:bg-gray-50 text-[#007bff] font-medium transition-colors text-[14px]"
+                            >
+                              Sign Out
+                            </button>
+                          </li>
+                        </ul>
+                      </nav>
                     </motion.div>
                   )}
                 </AnimatePresence>
